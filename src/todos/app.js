@@ -5,7 +5,7 @@ import { renderTodos } from './use-cases';
 
 const elementIDs = {
     TodoList: '.todo-list',
-    NewTodoInput: '#new-todo-input'
+    NewTodoInput: '#new-todo-input',
 }
 
 /**
@@ -46,6 +46,17 @@ export const App = (elementId) => {
         const element = event.target.closest('[data-id]'); //Busca al padre mas cercano con el nombre del atributo indicado
         todoStore.toggleTodo( element.getAttribute('data-id'));
         displayTodos();
+    });
+
+    todoListUl.addEventListener('click', ( event ) => {
+        const element = event.target;
+        const element2 = event.target.closest('[data-id]');
+
+        if ( element.className === 'destroy'){
+            todoStore.deleteTodo( element2.getAttribute('data-id') );
+            displayTodos();
+        }
+      
     });
 
 }
