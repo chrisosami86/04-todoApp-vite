@@ -55,6 +55,8 @@ export const App = (elementId) => {
         if ( element.className === 'destroy'){
             todoStore.deleteTodo( element2.getAttribute('data-id') );
             displayTodos();
+        }else{
+            return;
         }
       
     });
