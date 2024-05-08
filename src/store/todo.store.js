@@ -19,6 +19,7 @@ const state = {
     filter: Filters.All
 }
 
+
 const initStore = () => {
     loadStore();
     console.log('InitStore 🥑');

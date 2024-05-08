@@ -1,6 +1,6 @@
 import html from './app.html?raw'; //Importacion en crudo de html
 import todoStore, { Filters } from '../store/todo.store';
-import { renderTodos } from './use-cases';
+import { renderTodos, renderPending } from './use-cases';
 
 
 const elementIDs = {
@@ -8,6 +8,7 @@ const elementIDs = {
     TodoList: '.todo-list',
     NewTodoInput: '#new-todo-input',
     TodoFilters: '.filtro',
+    pendingCound: '#pending-count'
 }
 
 /**
@@ -19,7 +20,12 @@ export const App = (elementId) => {
   
     const displayTodos = () => {
         const todos = todoStore.getTodos( todoStore.getCurrentFilter() );
+        updatPending();
         renderTodos(elementIDs.TodoList, todos);
+    }
+
+    const updatPending = () => {
+        renderPending(elementIDs.pendingCound);
     }
 
     //Función auto-invocada cuando se llama la funcion App()
@@ -35,6 +41,9 @@ export const App = (elementId) => {
     const todoListUl = document.querySelector(elementIDs.TodoList);
     const btnClearCompleted = document.querySelector(elementIDs.ClearCompleted);
     const filtersLIs = document.querySelectorAll(elementIDs.TodoFilters);
+    
+
+    
 
     //Listener
     newDescriptionInput.addEventListener('keyup', ( event ) => {
@@ -50,6 +59,7 @@ export const App = (elementId) => {
         const element = event.target.closest('[data-id]'); //Busca al padre mas cercano con el nombre del atributo indicado
         todoStore.toggleTodo( element.getAttribute('data-id'));
         displayTodos();
+        
     });
 
     todoListUl.addEventListener('click', ( event ) => {
